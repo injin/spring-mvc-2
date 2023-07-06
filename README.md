@@ -1,6 +1,6 @@
 # spring-mvc-2
 [인프런] 스프링 MVC 2편 - 백엔드 웹 개발 활용 기술  
-[목차 바로가기](#./index.md)
+[목차 바로가기](./index.md)
 
 ## 3. 메시지, 국제화
 
@@ -63,7 +63,9 @@ String hello = ms.getMessage("hello", null, Locale.KOREA);
 
 ### 4.8 FieldError, ObjectError
 
-    📌 타입 오류로 바인딩에 실패하면 스프링은 FieldError 를 생성하면서 사용자가 입력한 값을 넣어둔다. 그리고 해당 오류를 BindingResult 에 담아서 컨트롤러를 호출한다. 따라서 타입 오류 같은 바인딩 실패시에도 사용자의 오류 메시지를 정상 출력할 수 있다.
+    📌 타입 오류로 바인딩에 실패하면 스프링은 FieldError 를 생성하면서 사용자가 입력한 값을 넣어둔다.
+    그리고 해당 오류를 BindingResult 에 담아서 컨트롤러를 호출한다.
+    따라서 타입 오류 같은 바인딩 실패시에도 사용자의 오류 메시지를 정상 출력할 수 있다.
     예) `new FieldError("item", "price", item.getPrice(), false, null, null, "가격은 1,000 ~ 1,000,000 까지 허용합니다.")`
 
 
@@ -99,18 +101,17 @@ String hello = ms.getMessage("hello", null, Locale.KOREA);
 
 
     📌 객체 오류의 경우 다음 순서로 2가지 생성
-
-    1.: code + "." + object name
-    2.: code
-    예) 오류 코드: required, object name: item
-    1.: required.item
-    2.: required
+    1. code + "." + object name
+    2. code
+    예) 오류 코드: required, object name: item 이면
+    1. required.item
+    2. required
 
     필드 오류의 경우 다음 순서로 4가지 메시지 코드 생성
-    1.: code + "." + object name + "." + field
-    2.: code + "." + field
-    3.: code + "." + field type
-    4.: code
+    1. code + "." + object name + "." + field
+    2. code + "." + field
+    3. code + "." + field type
+    4. code
     예) 오류 코드: typeMismatch, object name "user", field "age", field type: int
     1. “typeMismatch.user.age”
     2. “typeMismatch.age”
@@ -130,7 +131,7 @@ String hello = ms.getMessage("hello", null, Locale.KOREA);
 - 검증기를 모든 컨트롤러에 공통으로 적용도 가능하다
 
 
-    📌 `**@Valid**` 와 `**@Validated**`의 비교
+    📌 @Valid 와 @Validated의 비교
     - @Validated는 스프링 전용 검증 애노테이션이고 @Valid는 자바 표준 검증 애노테이션
     - @Valid는 build.gradle에 의존관계 추가 필요
     - @Validated는 내부에 groups 기능 포함
@@ -292,17 +293,17 @@ String hello = ms.getMessage("hello", null, Locale.KOREA);
 ### 7.1 서블릿 필터 - 소개
 
 - 필터는 서블릿이 지원하는 수문장
-- **필터 흐름**
-  참고로 스프링을 사용하는 경우 여기서 서블릿은 디스패처 서블릿
+- **필터 흐름**  
+  참고로 스프링을 사용하는 경우 여기서 서블릿은 디스패처 서블릿  
   `HTTP 요청 -> WAS -> 필터 -> 서블릿 -> 컨트롤러`
 - **필터 제한**
 
   `HTTP 요청 -> WAS -> 필터 -> 서블릿 -> 컨트롤러 //로그인 사용자
   HTTP 요청 -> WAS -> 필터(적절하지 않은 요청이라 판단, 서블릿 호출X) //비 로그인 사용자`
 
-- **필터 체인**
+- **필터 체인**  
   `HTTP 요청 -> WAS -> 필터1 -> 필터2 -> 필터3 -> 서블릿 -> 컨트롤러`
-- **필터 인터페이스**
+- **필터 인터페이스**  
   필터 인터페이스를 구현하고 등록하면 서블릿 컨테이너가 필터를 싱글톤 객체로 생성하고, 관리
 
     ```java
@@ -339,14 +340,14 @@ String hello = ms.getMessage("hello", null, Locale.KOREA);
 ### 7.4 스프링 인터셉터 - 소개
 
 - **스프링 인터셉터는 디스패처 서블릿과 컨트롤러 사이에서 컨트롤러 호출 직전에 호출 된다.**
-- **스프링 인터셉터 흐름**
+- **스프링 인터셉터 흐름**  
   `HTTP 요청 -> WAS -> 필터 -> 서블릿 -> 스프링 인터셉터 -> 컨트롤러`
-- **스프링 인터셉터 제한**
+- **스프링 인터셉터 제한**  
 
   `HTTP 요청 -> WAS -> 필터 -> 서블릿 -> 스프링 인터셉터 -> 컨트롤러 //로그인 사용자
   HTTP 요청 -> WAS -> 필터 -> 서블릿 -> 스프링 인터셉터(적절하지 않은 요청이라 판단, 컨트롤러 호출 X) // 비 로그인 사용자`
 
-- **스프링 인터셉터 체인**
+- **스프링 인터셉터 체인**  
   `HTTP 요청 -> WAS -> 필터 -> 서블릿 -> 인터셉터1 -> 인터셉터2 -> 컨트롤러`
 - **스프링 인터셉터 인터페이스**
 
@@ -363,7 +364,7 @@ String hello = ms.getMessage("hello", null, Locale.KOREA);
     }
     ```
 
-- 스프링 인터셉터는 서블릿 필터보다 편리하고, 더 정교하고 다양한 기능을 지원한다.
+- 스프링 인터셉터는 서블릿 필터보다 편리하고, 더 정교하고 다양한 기능을 지원한다.  
   세밀한 URL 패턴, preHandle&postHandle 분리, 세밀한 매개변수 지원
   필터보단 인터셉터 사용 권장
 - preHandle 메소드 리턴타입이 boolean임 주의. false이면 더이상 진행 안함
@@ -450,14 +451,16 @@ String hello = ms.getMessage("hello", null, Locale.KOREA);
   ⇒ 스프링 부트의 규약에 따라 정적 페이지를 만들면 된다.
 
     
-    📌 **1. 뷰 템플릿**
+    📌 1. 뷰 템플릿
     resources/templates/error/500.html
     resources/templates/error/5xx.html
-    **2. 정적 리소스( static , public )**
+
+    2. 정적 리소스( static , public )
     resources/static/error/400.html
     resources/static/error/404.html
     resources/static/error/4xx.html
-    **3. 적용 대상이 없을 때 뷰 이름( error )**
+
+    3. 적용 대상이 없을 때 뷰 이름( error )
     resources/templates/error.html
     
 
@@ -515,29 +518,29 @@ String hello = ms.getMessage("hello", null, Locale.KOREA);
 ### 9.6 스프링이 제공하는 ExceptionResolver2
 
 - 파라미터가 맞지 않는 TypeMismatchException 같은 경우 서블릿 컨테이너에 전달 돼 500으로 처리되지 않을까?
-  ⇒ 스프링이 자동으로 400으로 반환하게 처리한다. `**DefaultHandlerExceptionResolver**`가 스프링 내부에서 발생하는 여러가지 예외를 해결
+  ⇒ 스프링이 자동으로 400으로 반환하게 처리한다. `DefaultHandlerExceptionResolver`가 스프링 내부에서 발생하는 여러가지 예외를 해결
 
 ### 9.7 @ExceptionHandler
 
 - HandlerExceptionResolver를 직접 사용하는 것은 복잡. ModelAndView를 반환해야되는 것이 API 흐름에는 맞지 않음 ⇒ Spring이 더 간편한 방식 제공.
 - **실무에서 API 예외처리는 대부분 이 기능 사용**
-- **호출 흐름**
-  예외가 발생하면 가장 우선순위가 높은 `**ExceptionHandlerExceptionResolver**` 가 실행되고 해당 예외를 처리할 수 있는 `**@ExceptionHandler**` 가 있는 지 확인한다.
+- **호출 흐름**  
+  예외가 발생하면 가장 우선순위가 높은 `ExceptionHandlerExceptionResolver` 가 실행되고 해당 예외를 처리할 수 있는 `@ExceptionHandler` 가 있는 지 확인한다.  
   메소드에 @ResponseBody 가 적용되면 HTTP 컨버터가 사용되고 응답이 JSON으로 반환된다.
-- **HTTP 상태코드 지정하려면**
+- **HTTP 상태코드 지정하려면**  
   `@ResponseStatus(HttpStatus.BAD_REQUEST)`
-- **예외 생략**
+- **예외 생략**  
   @ExceptionHandler 에 예외를 생략할 수 있다. 생략하면 메서드 파라미터의 예외가 지정된다
-- **우선 순위**
+- **우선 순위**  
   스프링의 우선순위는 항상 자세한 것이 우선권을 가진다. 부모보다 자식이 우선
-- **다양한 예외**
+- **다양한 예외**  
   @ExceptionHandler({AException.class, BException.class})
-- ExceptionHandler는 다양한 파라미터와 응답을 지원한다. **잘 만듬**
+- ExceptionHandler는 다양한 파라미터와 응답을 지원한다.  
   공식문서 : [https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-exceptionhandler.html#mvc-ann-exceptionhandler-return-values](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-exceptionhandler.html#mvc-ann-exceptionhandler-return-values)
 
 ### 9.8 @ControllerAdvice
 
-- `**@ControllerAdvice**` 또는 `**@RestControllerAdvice**` 를 사용하면 정상코드와 예외처리 코드를 분리할 수 있다.
+- `@ControllerAdvice` 또는 `@RestControllerAdvice` 를 사용하면 정상코드와 예외처리 코드를 분리할 수 있다.
 - @Controller에 대상을 지정하지 않으면 모든 컨트롤러에 다 적용 (글로벌 적용)
 - 대상 컨트롤러 지정 방법
 
@@ -581,9 +584,9 @@ String hello = ms.getMessage("hello", null, Locale.KOREA);
 
 ### 10.4 컨버전 서비스 - ConversionService
 
-- 타입 컨버터를 하나하나 직접 찾아서 변환에 사용하는 것은 매우 불편
+- 타입 컨버터를 하나하나 직접 찾아서 변환에 사용하는 것은 매우 불편  
   ⇒ 스프링은 개별 컨버터를 모아두고 편리하게 사용할 수 있는 ConversionService 제공
-- 등록과 사용 분리 : ISP (Interface Segregation Principle)
+- 등록과 사용 분리 : ISP (Interface Segregation Principle)  
   ⇒ 사용자는 타입 컨버터를 몰라도 된다.
 
 ### 10.5 스프링에 Converter 적용하기
@@ -604,13 +607,13 @@ String hello = ms.getMessage("hello", null, Locale.KOREA);
 
 ### 10.9 스프링이 제공하는 기본 포맷터
 
-- 객체의 필드마다 다른 포매터를 지정할 수 있을까
+- 객체의 필드마다 다른 포매터를 지정할 수 있을까  
   ⇒ 애노테이션 기반으로 원하는 형식 지정
 - `@NumberFormat` : 숫자 관련 형식 지정 포맷터 사용, NumberFormatAnnotationFormatterFactory
 - `@DateTimeFormat` : 날짜 관련 형식 지정 포맷터 사용,
   Jsr310DateTimeFormatAnnotationFormatterFactory
 - **메시지 컨버터( HttpMessageConverter )에는 컨버전 서비스가 적용되지 않는다.
-  : 라이브러리에 달렸기 때문**
+  : 라이브러리에 달렸기 때문**  
   컨버전 서비스는 @RequestParam , @ModelAttribute , @PathVariable , 뷰 템플릿 등에서 사용할 수 있다.
 
 ---
@@ -620,8 +623,8 @@ String hello = ms.getMessage("hello", null, Locale.KOREA);
 - HTML 폼 전송 방식은 2가지가 있음
     - **application/x-www-form-urlencoded**
     - **multipart/form-data**
-- 문자(name=kim&age=20) 와 바이너리 (파일)을 동시에 전송해야 한다면?
-  multipart/form-data 방식 사용 : form 태그에 `enctype="multipart/form-data”` 지정
+- 문자(name=kim&age=20) 와 바이너리 (파일)을 동시에 전송해야 한다면?  
+  multipart/form-data 방식 사용 : form 태그에 `enctype="multipart/form-data”` 지정  
   multipart/form-data 는 이렇게 각각의 항목을 구분해서, 한번에 전송하는 것
 - enctype 지정하지 않으면 application/x-www-form-urlencoded 이 기본
 
